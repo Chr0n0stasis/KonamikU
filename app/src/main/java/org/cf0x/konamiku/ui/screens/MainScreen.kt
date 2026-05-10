@@ -113,12 +113,21 @@ fun MainScreen(dataStore: AppDataStore) {
     val notifPermLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {}
+    val promotedNotifPermLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {}
 
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED) {
                 notifPermLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+        if (Build.VERSION.SDK_INT >= 36) {
+            if (context.checkSelfPermission(Manifest.permission.POST_PROMOTED_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                promotedNotifPermLauncher.launch(Manifest.permission.POST_PROMOTED_NOTIFICATIONS)
             }
         }
         LiveUpdateManager.createChannel(context)
