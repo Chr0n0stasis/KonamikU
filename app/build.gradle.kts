@@ -17,6 +17,8 @@ if (propFile.exists()) {
 
 val vMajor = (project.findProperty("verMajor") ?: versionProps.getProperty("ver_Major") ?: "0").toString()
 val vMinor = (project.findProperty("verMinor") ?: versionProps.getProperty("ver_Minor") ?: "0").toString()
+val compileSdkVersion = (project.findProperty("androidCompileSdk") ?: "37").toString().toInt()
+val targetSdkVersion = (project.findProperty("androidTargetSdk") ?: "37").toString().toInt()
 
 val dateTag = SimpleDateFormat("yyMM").format(Date())
 val dateDotTag = SimpleDateFormat("yy.MM").format(Date())
@@ -26,12 +28,12 @@ val finalName = "${dateDotTag}.${vMajor}.${vMinor}"
 
 android {
     namespace  = "org.cf0x.konamiku"
-    compileSdk = 37
+    compileSdk = compileSdkVersion
 
     defaultConfig {
         applicationId = "org.cf0x.konamiku"
         minSdk        = 29
-        targetSdk     = 37
+        targetSdk     = targetSdkVersion
         versionCode = finalCode.toInt()
         versionName = finalName
 
